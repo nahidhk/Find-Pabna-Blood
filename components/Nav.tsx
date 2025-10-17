@@ -1,34 +1,99 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform, StatusBar } from 'react-native';
-import Menu from './Menu';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StatusBar, Button, TextInput } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import mySetting from '@/data/setting.json';
+import style from '@/app/style/style'
+
+
+
 
 export default function Navbar() {
-  const logoAndName = "Find Pabna Blood"
+  const logoAndName = mySetting.appName;
+  const [menuOpen, setMenuOpen] = useState(false);
+
+
+
+  const [menuIcon, setMenuIcon] = useState('menu'); // এখানে আইকন state রাখলাম
+
+  // 🔹 useEffect: menuOpen পরিবর্তন হলে আইকন পরিবর্তন হবে
+  useEffect(() => {
+    if (menuOpen) {
+      setMenuIcon('close-outline');
+    } else {
+      setMenuIcon('menu');
+    }
+  }, [menuOpen]);
+
+
+  function toggleBtn() {
+    setMenuOpen(!menuOpen);
+  }
+
+
+
   return (
-    <View style={styles.navbar}>
-      <Text style={styles.logo}>{logoAndName}</Text>
-      <Menu />
-    </View>
+    <>
+      <View style={[style.navbar, style.sTop]}>
+        <Text style={style.logo}>{logoAndName}</Text>
+        <TouchableOpacity>
+          <Ionicons name={menuIcon} onPress={() => toggleBtn()} size={40} color={'#fff'} style={{ cursor: 'pinter' }} />
+        </TouchableOpacity>
+      </View>
+
+      {
+        menuOpen && (
+          <View style={style.navMenu}>
+            <View style={style.navbar}>
+              <Text style={style.logo}>Menu</Text>
+            </View>
+
+
+            <View style={style.viewBox}>
+
+
+              <TouchableOpacity style={style.btnT}>
+                <Text style={style.btnText}>
+                  <Ionicons name="home-outline" size={18} color="black" />{"  "}
+                  Home
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={style.btnT}>
+                <Text style={style.btnText}>
+                  <Ionicons name="bug-outline" size={18} color="black" />{"  "}
+                  Bug Report
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={style.btnT}>
+                <Text style={style.btnText}>
+                  <Ionicons name="create-outline" size={18} color="black" /> {"  "}
+                  Edit old detels
+                </Text>
+              </TouchableOpacity>
+
+
+              <TouchableOpacity style={style.btnT}>
+                <Text style={style.btnText}>
+                  <Ionicons name="globe-outline" size={18} color="black" />{"  "}
+                  Offical Website
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={style.btnT}>
+                <Text style={style.btnText}>
+                  <Ionicons name="logo-github" size={18} color="black" />{"  "}
+                  Open Sorce
+                </Text>
+              </TouchableOpacity>
+
+
+
+            </View>
+          </View>
+        )
+      }
+    </>
+
   );
 }
-
-const styles = StyleSheet.create({
-  navbar: {
-    position: 'absolute',
-    top: Platform.OS === 'android' ? StatusBar.currentHeight : 0, // status bar height adjust
-    left: 0,
-    right: 0,
-    height: 60,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    backgroundColor: '#4680ff',
-    zIndex: 100,
-  },
-  logo: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-});

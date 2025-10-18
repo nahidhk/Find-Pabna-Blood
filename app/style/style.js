@@ -47,6 +47,28 @@ export default StyleSheet.create({
   },
   btnText: {
     fontSize: 17,
-  }
+  },
+  btnCenter:{
+    fontSize:17,
+    textAlign:"center",
+    backgroundColor:"#4680ff",
+    color:"#fff"
+
+  },
+  bottomSide:{
+    bottom:syTop,
+    position:"absolute",
+    padding:20,
+    opacity:0.4
+  },
+  iTag:{
+    fontStyle:"italic",
+  },
+  textCenter:{
+    textAlign:"center",
+  },
+  bigText:{
+    fontSize:30,
+  },
 
 });

@@ -1,12 +1,15 @@
 import React from "react";
+import { Stack } from "expo-router";
 import Navbar from "@/components/Nav";
-import Home from "@/components/pages/Home";
 
-export default function app() {
+export default function Layout() {
   return (
     <>
+      {/* Navbar সব স্ক্রিনে থাকবে */}
       <Navbar />
-      <Home />
+
+      {/* Expo Router stack */}
+      <Stack screenOptions={{ headerShown: false }} />
     </>
-  )
+  );
 }

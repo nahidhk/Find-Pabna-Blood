@@ -1,101 +1,135 @@
-import React, { useState, useEffect } from 'react';
-import { Linking, View, Text, TouchableOpacity, StatusBar, Button, TextInput } from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import mySetting from '@/data/setting.json';
-import style from '@/app/style/style'
-
-
-
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, Linking, Animated } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import style from "@/app/style/style";
+import mySetting from "@/data/setting.json";
 
 export default function Navbar() {
-  const logoAndName = mySetting.appName;
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Slide animation
+  const slideAnim = useState(new Animated.Value(-300))[0];
 
-
-  const [menuIcon, setMenuIcon] = useState('menu');
-  useEffect(() => {
-    if (menuOpen) {
-      setMenuIcon('close-outline');
+  const toggleMenu = () => {
+    if (!menuOpen) {
+      setMenuOpen(true);
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
     } else {
-      setMenuIcon('menu');
+      Animated.timing(slideAnim, {
+        toValue: -300,
+        duration: 300,
+        useNativeDriver: false,
+      }).start(() => setMenuOpen(false));
     }
-  }, [menuOpen]);
-
-
-  function toggleBtn() {
-    setMenuOpen(!menuOpen);
-  }
-
-
+  };
 
   return (
     <>
+      {/* Top Navbar */}
       <View style={[style.navbar, style.sTop]}>
-        <Text style={style.logo}>{logoAndName}</Text>
-        <TouchableOpacity>
-          <Ionicons name={menuIcon} onPress={() => toggleBtn()} size={40} color={'#fff'} style={{ cursor: 'pinter' }} />
+        <Text style={style.logo}>{mySetting.appName}</Text>
+        <TouchableOpacity onPress={toggleMenu}>
+          <Ionicons
+            name={menuOpen ? "close-outline" : "menu-outline"}
+            size={40}
+            color="#fff"
+          />
         </TouchableOpacity>
       </View>
 
-      {
-        menuOpen && (
-          <View style={style.navMenu}>
-            <View style={style.navbar}>
-              <Text style={style.logo}>Menu</Text>
-            </View>
-
-
-            <View style={style.viewBox}>
-
-
-              <TouchableOpacity style={style.btnT}>
-                <Text style={style.btnText}>
-                  <Ionicons name="home-outline" size={18} color="black" />{"  "}
-                  Home
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={style.btnT}>
-                <Text style={style.btnText}>
-                  <Ionicons name="bug-outline" size={18} color="black" />{"  "}
-                  Bug Report
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={style.btnT}>
-                <Text style={style.btnText}>
-                  <Ionicons name="create-outline" size={18} color="black" /> {"  "}
-                  Edit old detels
-                </Text>
-              </TouchableOpacity>
-
-
-              <TouchableOpacity style={style.btnT}>
-                <Text style={style.btnText}>
-                  <Ionicons name="globe-outline" size={18} color="black" />{"  "}
-                  Offical Website
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity onPress={() => Linking.openURL('https://github.com/nahidhk/Find-Pabna-Blood')} style={style.btnT}>
-                <Text style={style.btnText}>
-                  <Ionicons name="logo-github" size={18} color="black" />{"  "}
-                  Open Sorce
-                </Text>
-              </TouchableOpacity>
-
-
-
-
-
-
-
-            </View>
+      {/* Slide Menu */}
+      {menuOpen && (
+        <Animated.View
+          style={[
+            style.navMenu,
+            { transform: [{ translateX: slideAnim }] },
+          ]}
+        >
+          <View style={style.navbar}>
+            <Text style={style.logo}>Menu</Text>
           </View>
-        )
-      }
-    </>
+          <View style={style.viewBox}>
+            <TouchableOpacity
+              style={style.btnT}
+              onPress={() => {
+                router.push("/");
+                toggleMenu();
+              }}
+            >
+              <Text style={style.btnText}>
+                <Ionicons name="home-outline" size={17} /> Home
+              </Text>
+            </TouchableOpacity>
 
+            <TouchableOpacity
+              style={style.btnT}
+              onPress={() => {
+                router.push("/bug");
+                toggleMenu();
+              }}
+            >
+              <Text style={style.btnText}>
+                <Ionicons name="bug-outline" size={17} /> Bug Report
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={style.btnT}
+              onPress={() => {
+                router.push("/about");
+                toggleMenu();
+              }}
+            >
+              <Text style={style.btnText}>
+                <Ionicons name="information-circle-outline" size={17} /> About
+                Us
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={style.btnT}
+              onPress={() =>
+                Linking.openURL("https://pabna-blood.vercel.app/")
+              }
+            >
+              <Text style={style.btnText}>
+                <Ionicons name="globe-outline" size={17} /> Offical Website
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[style.btnT, style.btnCenter]} onPress={() => {
+              router.push("/join");
+              toggleMenu();
+            }}>
+              <Text style={style.btnCenter}>
+                <Ionicons name="add" size={17} color="#fff" />
+                Join Now
+              </Text>
+            </TouchableOpacity>
+
+
+          </View>
+
+          <View style={style.bottomSide}>
+            <Text style={style.iTag}>
+              Version 5.3.8 
+            </Text >
+            <Text style={style.iTag}>
+              Powered By:
+            </Text >
+            <Text style={style.iTag}>
+              ভবানীপুর সমাজ কল্যাণ সংঘ
+            </Text>
+          </View>
+
+
+        </Animated.View>
+      )}
+    </>
   );
 }

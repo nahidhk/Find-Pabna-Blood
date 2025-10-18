@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StatusBar, Button, TextInput } from 'react-native';
+import { Linking, View, Text, TouchableOpacity, StatusBar, Button, TextInput } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import mySetting from '@/data/setting.json';
 import style from '@/app/style/style'
@@ -13,9 +13,7 @@ export default function Navbar() {
 
 
 
-  const [menuIcon, setMenuIcon] = useState('menu'); // এখানে আইকন state রাখলাম
-
-  // 🔹 useEffect: menuOpen পরিবর্তন হলে আইকন পরিবর্তন হবে
+  const [menuIcon, setMenuIcon] = useState('menu');
   useEffect(() => {
     if (menuOpen) {
       setMenuIcon('close-outline');
@@ -80,12 +78,16 @@ export default function Navbar() {
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={style.btnT}>
+              <TouchableOpacity onPress={() => Linking.openURL('https://github.com/nahidhk/Find-Pabna-Blood')} style={style.btnT}>
                 <Text style={style.btnText}>
                   <Ionicons name="logo-github" size={18} color="black" />{"  "}
                   Open Sorce
                 </Text>
               </TouchableOpacity>
+
+
+
+
 
 
 

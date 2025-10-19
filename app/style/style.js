@@ -13,7 +13,7 @@ export default StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    height: 60,
+    height: 70,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -70,5 +70,61 @@ export default StyleSheet.create({
   bigText:{
     fontSize:30,
   },
+  cRed:{
+    color:"red"
+  },
+  input:{
+    borderWidth: 1,
+    borderColor: "#888",
+    borderRadius: 4,
+    padding: 10,
+  },
+  btn:{
+    margin:20,
+    borderRadius:100,
+  },
+userBox: {
+  flexDirection: "row",
+  alignItems: "center",
+  backgroundColor: "#ffffff",
+  borderRadius: 15,
+  borderWidth: 1,
+  borderColor: "#e0e0e0",
+  margin: 12,
+  padding: 15,
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 3 },
+  shadowOpacity: 0.2,
+  shadowRadius: 4,
+  elevation: 5,
+},
+
+profileImage: {
+  width: 90,
+  height: 90,
+  borderRadius: 45,
+  marginRight: 15,
+  borderWidth: 2,
+  borderColor: "#007bff",
+},
+
+userName: {
+  fontSize: 20,
+  fontWeight: "700",
+  color: "#333",
+  marginBottom: 4,
+},
+
+userDetail: {
+  fontSize: 15,
+  color: "#555",
+  marginBottom: 3,
+},
+
+socialRow: {
+  flexDirection: "row",
+  marginTop: 8,
+}
+
 
 });

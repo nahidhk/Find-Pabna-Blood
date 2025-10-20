@@ -124,7 +124,8 @@ userDetail: {
 socialRow: {
   flexDirection: "row",
   marginTop: 8,
-}
+},
+
 
 
 });

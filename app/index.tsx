@@ -1,52 +1,72 @@
-import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
-import applogo from "@/assets/images/icon.png";
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, ScrollView , Linking} from "react-native";
+import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import style from "./style/style";
+import jsonUrlApi from "@/data/json/json_rest_link.json"
+import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 export default function Home() {
-  return (
-    <View style={style.viewBox}>
-      <View style={style.userBox}>
-        {/* Profile Image */}
-        <Image
-          source={applogo}
-          style={style.profileImage}
-        />
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-        {/* User Info */}
-        <View style={{ flex: 1 }}>
-          <Text style={style.userName}>
-            Md Nahidul Islam{" "}
-            <MaterialIcons name="verified" size={18} color="#007bff" />
-          </Text>
+  useEffect(() => {
+    fetch(jsonUrlApi.url_output)
+      .then((res) => res.json())
+      .then((data) => {
+        setUsers(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Fetch Error:", err);
+        setLoading(false);
+      });
+  }, []);
 
-          <Text style={style.userDetail}>
-            📞 +8801877357091
-          </Text>
-
-          <Text style={style.userDetail}>
-            🩸 Blood Group: <Text style={{ color: "red", fontWeight: "bold" }}>A+</Text>
-          </Text>
-
-          <Text style={style.userDetail}>
-            📍 Ataikula, Pabna
-          </Text>
-
-          {/* Social Icons */}
-          <View style={style.socialRow}>
-            <TouchableOpacity>
-              <FontAwesome name="whatsapp" size={27} color="#25D366" />
-            </TouchableOpacity>
-            <TouchableOpacity style={{ marginLeft: 10 }}>
-              <FontAwesome name="telegram" size={25} color="#0088cc" />
-            </TouchableOpacity>
-            <TouchableOpacity style={{ marginLeft: 10 }}>
-            <FontAwesome name="phone-square" size={25} color="#4680ff" />
-            </TouchableOpacity>
-          </View>
-        </View>
+  if (loading) {
+    return (
+      <View style={[style.viewBox, { alignItems: "center", justifyContent: "center", flex: 1 }]}>
+        <ActivityIndicator size="80" color="#007bff" />
+        <Text>লোডিং...</Text>
       </View>
-    </View>
+    );
+  }
+
+  return (
+    <ScrollView>
+      <View style={style.viewBox}>
+        {users.map((user, index) => (
+          <View key={index} style={style.userBox}>
+
+            <Image source={{ uri: user.avatar_url }} style={style.profileImage} />
+
+
+            <View style={{ flex: 1, marginLeft: 12 }}>
+              <Text style={style.userName}>
+                {user.name}{" "}
+                {user.v && <MaterialIcons name="verified" size={18} color="#007bff" />}
+              </Text>
+
+              <Text style={style.userDetail}>📞 +880{user.phone}</Text>
+              <Text style={style.userDetail}>
+                🩸 Blood Group:{" "}
+                <Text style={{ color: "red", fontWeight: "bold" }}>{user.blood}</Text>
+              </Text>
+              <Text style={style.userDetail}>📍 {user.address}</Text>
+
+
+              <View style={style.socialRow}>
+                <TouchableOpacity onPress={() => Linking.openURL(`https://wa.me/${user.whatsapp}`)}
+>
+                  <FontAwesome name="whatsapp" size={27} color="#25D366" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Linking.openURL(`tel:+880${user.phone}`)} style={{ marginLeft: 10 }}>
+                  <FontAwesome name="phone-square" size={25} color="#4680ff" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        ))}
+      </View>
+    </ScrollView>
   );
 }

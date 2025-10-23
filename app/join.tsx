@@ -97,10 +97,7 @@ export default function Join() {
                                 ঠিকানা: {currentUser.address}{"\n"}
                                 রক্ত : {currentUser.blood}
                             </Text>
-                        </Text>
-
-
-
+                        
                         <TouchableOpacity style={{ marginTop: 10, backgroundColor: "#fff", display: "flex", flexDirection: "row", justifyContent: 'space-between', }}>
                             <Text style={{ backgroundColor: "#ffffffff", color: "#4680ff", padding: 8, textAlign: "center", margin: 3, }}>
                                 Edit Profile

@@ -52,6 +52,7 @@ export default function Home() {
                 <Text style={{ color: "red", fontWeight: "bold" }}>{user.blood}</Text>
               </Text>
               <Text style={style.userDetail}>📍 {user.address}</Text>
+              <Text style={style.userDetail}>{user.gender}</Text>
 
 
               <View style={style.socialRow}>

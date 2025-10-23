@@ -69,6 +69,11 @@ export default StyleSheet.create({
   },
   bigText:{
     fontSize:30,
+    color:"#a1a1a1ff",
+    margin:3,
+    borderWidth:1,
+    borderColor:"#fff",
+    borderBottomColor:"#77777750"
   },
   cRed:{
     color:"red"
@@ -125,6 +130,12 @@ socialRow: {
   flexDirection: "row",
   marginTop: 8,
 },
+popup:{
+  width:"90%",
+  backgroundColor:"#fff",
+  padding:10,
+  borderRadius:3,
+}
 
 
 

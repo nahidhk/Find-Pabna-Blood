@@ -57,9 +57,9 @@ export default StyleSheet.create({
 
   },
   bottomSide: {
-    bottom: syTop,
-    position: "absolute",
-    padding: 20,
+    bottom:0,
+    padding:10,
+    position: "absolute",   
     opacity: 0.4
   },
   iTag: {
@@ -85,6 +85,8 @@ export default StyleSheet.create({
     borderColor: "#888",
     borderRadius: 4,
     padding: 10,
+    margin:10,
+    textTransform:"uppercase"
   },
   btn: {
     margin: 20,

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Linking, Animated } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons , Octicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import style from "@/app/style/style";
 import mySetting from "@/data/setting.json";
+
+
 
 export default function Navbar() {
   const router = useRouter();
@@ -75,7 +77,7 @@ export default function Navbar() {
               }}
             >
               <Text style={style.btnText}>
-                <Ionicons name="bug-outline" size={17} /> Bug Report
+                <Octicons name="verified" size={17} color="black" /> Verify Profile
               </Text>
             </TouchableOpacity>
 
@@ -108,7 +110,7 @@ export default function Navbar() {
             }}>
               <Text style={style.btnCenter}>
                 <Ionicons name="add" size={17} color="#fff" />
-                Join Now
+                Add Profile
               </Text>
             </TouchableOpacity>
 

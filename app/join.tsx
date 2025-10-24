@@ -49,25 +49,28 @@ export default function Join() {
         );
 
         if (filteredData.length === 0) {
-            
-                Alert.alert(
-                    "ADD PROFILE",
-                    `+880${teleNumber} এই নম্বর দিয়ে প্রোফাইল তৈরি করতে "OK" প্রেস করুন`,
-                    [
-                        {
-                            text: "Cancel",
-                            style: "cancel",
+
+            Alert.alert(
+                "ADD PROFILE",
+                `+880${teleNumber} এই নম্বর দিয়ে প্রোফাইল তৈরি করতে "OK" প্রেস করুন`,
+                [
+                    {
+                        text: "Cancel",
+                        style: "cancel",
+                    },
+                    {
+                        text: "OK",
+                        onPress: () => {
+                            router.push({
+                                pathname: "/NewAdd",
+                                params: { mobileNumber: teleNumber }, 
+                            });
                         },
-                        {
-                            text: "OK",
-                            onPress: () => {
-                               router.push("/NewAdd")
-                            },
-                        },
-                    ],
-                    { cancelable: false }
-                );
-           
+                    },
+                ],
+                { cancelable: false }
+            );
+
         }
 
         const user = filteredData[0];
@@ -98,6 +101,7 @@ export default function Join() {
                     style={style.input}
                     keyboardType="numeric"
                     placeholder="e.g 01812345678"
+                    placeholderTextColor="#888"
                 />
 
                 <TouchableOpacity

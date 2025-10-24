@@ -48,8 +48,8 @@ export default function Home() {
 
               <Text style={style.userDetail}>📞 +880{user.phone}</Text>
               <Text style={style.userDetail}>
-                🩸 Blood Group:{" "}
-                <Text style={{ color: "red", fontWeight: "bold" }}>{user.blood}</Text>
+                🩸 Blood:{" "}
+                <Text style={[{ color: "red", fontWeight: "bold" , fontSize:20} , style.upper]}>{user.blood}</Text>
               </Text>
               <Text style={style.userDetail}>📍 {user.address}</Text>
               <Text style={style.userDetail}>{user.gender}</Text>

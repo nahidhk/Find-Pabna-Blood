@@ -10,6 +10,7 @@ export default StyleSheet.create({
     top: syTop,
   },
   navbar: {
+    textTransform: "uppercase",
     position: 'absolute',
     left: 0,
     right: 0,
@@ -48,95 +49,96 @@ export default StyleSheet.create({
   btnText: {
     fontSize: 17,
   },
-  btnCenter:{
-    fontSize:17,
-    textAlign:"center",
-    backgroundColor:"#4680ff",
-    color:"#fff"
+  btnCenter: {
+    fontSize: 17,
+    textAlign: "center",
+    backgroundColor: "#4680ff",
+    color: "#fff"
 
   },
-  bottomSide:{
-    bottom:syTop,
-    position:"absolute",
-    padding:20,
-    opacity:0.4
+  bottomSide: {
+    bottom: syTop,
+    position: "absolute",
+    padding: 20,
+    opacity: 0.4
   },
-  iTag:{
-    fontStyle:"italic",
+  iTag: {
+    fontStyle: "italic",
   },
-  textCenter:{
-    textAlign:"center",
+  textCenter: {
+    textAlign: "center",
   },
-  bigText:{
-    fontSize:30,
-    color:"#a1a1a1ff",
-    margin:3,
-    borderWidth:1,
-    borderColor:"#fff",
-    borderBottomColor:"#77777750"
+  bigText: {
+    textTransform: "uppercase",
+    fontSize: 30,
+    color: "#a1a1a1ff",
+    margin: 3,
+    borderWidth: 1,
+    borderColor: "#fff",
+    borderBottomColor: "#77777750"
   },
-  cRed:{
-    color:"red"
+  cRed: {
+    color: "red"
   },
-  input:{
+  input: {
     borderWidth: 1,
     borderColor: "#888",
     borderRadius: 4,
     padding: 10,
   },
-  btn:{
-    margin:20,
-    borderRadius:100,
+  btn: {
+    margin: 20,
+    borderRadius: 100,
   },
-userBox: {
-  flexDirection: "row",
-  alignItems: "center",
-  backgroundColor: "#ffffff",
-  borderRadius: 15,
-  borderWidth: 1,
-  borderColor: "#e0e0e0",
-  margin: 12,
-  padding: 15,
-  shadowColor: "#000",
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.2,
-  shadowRadius: 4,
-  elevation: 5,
-},
+  userBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#ffffff",
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
+    margin: 12,
+    padding: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
 
-profileImage: {
-  width: 90,
-  height: 90,
-  borderRadius: 45,
-  marginRight: 15,
-  borderWidth: 2,
-  borderColor: "#007bff",
-},
+  profileImage: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    marginRight: 15,
+    borderWidth: 2,
+    borderColor: "#007bff",
+  },
 
-userName: {
-  fontSize: 20,
-  fontWeight: "700",
-  color: "#333",
-  marginBottom: 4,
-},
+  userName: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#333",
+    marginBottom: 4,
+  },
 
-userDetail: {
-  fontSize: 15,
-  color: "#555",
-  marginBottom: 3,
-},
+  userDetail: {
+    fontSize: 15,
+    color: "#555",
+    marginBottom: 3,
+  },
 
-socialRow: {
-  flexDirection: "row",
-  marginTop: 8,
-},
-popup:{
-  width:"90%",
-  backgroundColor:"#fff",
-  padding:10,
-  borderRadius:3,
-}
-
-
-
+  socialRow: {
+    flexDirection: "row",
+    marginTop: 8,
+  },
+  popup: {
+    width: "90%",
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 3,
+  },
+  upper: {
+    textTransform: "uppercase",
+  },
 });

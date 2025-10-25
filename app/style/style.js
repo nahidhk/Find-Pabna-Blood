@@ -143,4 +143,9 @@ export default StyleSheet.create({
   upper: {
     textTransform: "uppercase",
   },
+  medel:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center",
+  }
 });

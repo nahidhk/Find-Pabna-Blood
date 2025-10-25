@@ -11,6 +11,7 @@ import {
 import style from "./style/style";
 import json_rest_link from "@/data/json/json_rest_link.json";
 import { useRouter } from "expo-router";
+import ErrJsonx from "@/components/ErrJsonx";
 
 export default function Join() {
     const router = useRouter();
@@ -20,14 +21,19 @@ export default function Join() {
     const [modalVisible, setModalVisible] = useState(false);
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
+    const [error, setError] = useState(false); 
 
     useEffect(() => {
         fetch(json_rest_link.url_output)
             .then((res) => res.json())
             .then((data) => setUsers(data))
-            .catch((err) => console.error("Fetch Error:", err));
+            .catch((err) => {
+                setError(true);  
+            });
     }, []);
-
+    if (error) {
+        return <ErrJsonx />; 
+    }
     const numberCheck = () => {
         if (
             phoneNumber.trim() === "" ||
@@ -40,7 +46,6 @@ export default function Join() {
             );
             return;
         }
-
         const teleNumber = phoneNumber.slice(1);
         setLoading(true);
 
@@ -63,7 +68,7 @@ export default function Join() {
                         onPress: () => {
                             router.push({
                                 pathname: "/NewAdd",
-                                params: { mobileNumber: teleNumber }, 
+                                params: { mobileNumber: teleNumber },
                             });
                         },
                     },

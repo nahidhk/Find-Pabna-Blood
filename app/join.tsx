@@ -21,18 +21,18 @@ export default function Join() {
     const [modalVisible, setModalVisible] = useState(false);
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
-    const [error, setError] = useState(false); 
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         fetch(json_rest_link.url_output)
             .then((res) => res.json())
             .then((data) => setUsers(data))
             .catch((err) => {
-                setError(true);  
+                setError(true);
             });
     }, []);
     if (error) {
-        return <ErrJsonx />; 
+        return <ErrJsonx />;
     }
     const numberCheck = () => {
         if (

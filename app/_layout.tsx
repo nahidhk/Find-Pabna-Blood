@@ -11,9 +11,9 @@ import * as NavigationBar from "expo-navigation-bar";
 export default function Layout() {
   useEffect(() => {
     const init = async () => {
-      // Android NavigationBar
+      
       if (Platform.OS === "android") {
-        await NavigationBar.setBackgroundColorAsync("#fff", false); 
+        // await NavigationBar.setBackgroundColorAsync("#fff", false); 
         await NavigationBar.setButtonStyleAsync("dark");
       }
     };

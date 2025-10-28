@@ -9,9 +9,9 @@ import {
     Modal,
 } from "react-native";
 import style from "./style/style";
-import json_rest_link from "@/data/json/json_rest_link.json";
 import { useRouter } from "expo-router";
 import ErrJsonx from "@/components/ErrJsonx";
+import serverLink from "@/components/ServerLink";
 
 export default function Join() {
     const router = useRouter();
@@ -22,9 +22,16 @@ export default function Join() {
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     const [error, setError] = useState(false);
+    const [icxData, setData] = useState([])
 
     useEffect(() => {
-        fetch(json_rest_link.url_output)
+        serverLink().then(
+            data =>{
+                setData(data)
+            }
+        )
+        alert(icxData.serverLink)
+        fetch(icxData.serverLink)
             .then((res) => res.json())
             .then((data) => setUsers(data))
             .catch((err) => {

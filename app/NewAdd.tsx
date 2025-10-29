@@ -1,6 +1,5 @@
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams , router } from "expo-router";
 import { View, Text, Button } from "react-native";
-import { router } from "expo-router";
 import style from "./style/style";
 
 export default function NewAdd() {

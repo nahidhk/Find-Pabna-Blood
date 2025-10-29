@@ -1,28 +1,35 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Button, View, Platform } from "react-native";
+import { StyleSheet, Platform, useColorScheme } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
 import Navbar from "@/components/Nav";
 import * as NavigationBar from "expo-navigation-bar";
 
-
-
-
 export default function Layout() {
+  const colorScheme = useColorScheme();
+
   useEffect(() => {
     const init = async () => {
-      
       if (Platform.OS === "android") {
-        // await NavigationBar.setBackgroundColorAsync("#fff", false); 
-        await NavigationBar.setButtonStyleAsync("dark");
+        await NavigationBar.setBackgroundColorAsync(
+          colorScheme === "dark" ? "#292929ff" : "#fff",
+          false
+        );
+        await NavigationBar.setButtonStyleAsync(
+          colorScheme === "dark" ? "light" : "dark"
+        );
       }
     };
-
     init();
-  }, []);
+  }, [colorScheme]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        { backgroundColor: colorScheme === "dark" ? "#242424ff" : "#4680ff" },
+      ]}
+    >
       <Navbar />
       <Stack screenOptions={{ headerShown: false }} />
     </SafeAreaView>
@@ -32,6 +39,5 @@ export default function Layout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
   },
-})
+});

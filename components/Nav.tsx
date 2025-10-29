@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Linking, Animated } from "react-native";
-import { Ionicons , Octicons } from "@expo/vector-icons";
+import { View, Text, TouchableOpacity, Linking, Animated, Image } from "react-native";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import style from "@/app/style/style";
 import mySetting from "@/data/setting.json";
@@ -35,14 +35,28 @@ export default function Navbar() {
     <>
       {/* Top Navbar */}
       <View style={[style.navbar, style.sTop]}>
-        <Text style={style.logo}>{mySetting.appName}</Text>
-        <TouchableOpacity onPress={toggleMenu}>
-          <Ionicons
-            name={menuOpen ? "close-outline" : "menu-outline"}
-            size={40}
-            color="#fff"
-          />
-        </TouchableOpacity>
+
+
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
+          <TouchableOpacity onPress={toggleMenu}>
+            <Ionicons
+              name={menuOpen ? "close-outline" : "menu-outline"}
+              size={40}
+              color="#fff"
+            />
+          </TouchableOpacity>
+
+          <Text style={{ fontSize: 24, fontWeight: "bold", color: "#fff", marginLeft: 15 }}>
+            {mySetting.appName}
+          </Text>
+        </View>
+
       </View>
 
       {/* Slide Menu */}
@@ -55,8 +69,30 @@ export default function Navbar() {
         >
           <View style={style.navbar}>
             <Text style={style.logo}>Menu</Text>
+            <TouchableOpacity onPress={toggleMenu}>
+              <Ionicons
+                name={menuOpen ? "close-outline" : "menu-outline"}
+                size={40}
+                color="#fff"
+              />
+            </TouchableOpacity>
           </View>
+
+
+
           <View style={style.viewBox}>
+
+
+            <View style={[style.btn,{justifyContent:"center",alignItems:"center"}]}>
+              <Image
+                source={require('../assets/images/android-icon-monochrome.png')}
+                style={{ height: 100, width: 100, }}
+              />
+            </View>
+
+
+
+
             <TouchableOpacity
               style={style.btnT}
               onPress={() => {
@@ -119,7 +155,7 @@ export default function Navbar() {
 
           <View style={style.bottomSide}>
             <Text style={style.iTag}>
-              Version 5.3.8 
+              Version 5.3.8
             </Text >
             <Text style={style.iTag}>
               Powered By:

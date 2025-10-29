@@ -31,7 +31,7 @@ export default function Join() {
             }
         )
         alert(icxData.serverLink)
-        fetch(icxData.serverLink)
+        fetch(icxData.serverLink)  
             .then((res) => res.json())
             .then((data) => setUsers(data))
             .catch((err) => {

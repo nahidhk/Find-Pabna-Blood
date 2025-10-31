@@ -5,44 +5,58 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  Linking,
+  Linking
 } from "react-native";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import style from "./style/style";
 import Loadding from "@/components/Loadding";
 import ErrJsonx from "@/components/ErrJsonx";
 import serverLink from "@/components/ServerLink";
+import DropDownPicker from "react-native-dropdown-picker";
 
 export default function Home() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [icxData, setIcxData] = useState([])
+  const [icxData, setIcxData] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [items, setItems] = useState([
+    { label: "All", value: "" },
+    { label: "A+", value: "A+" },
+    { label: "A-", value: "A-" },
+    { label: "B+", value: "B+" },
+    { label: "B-", value: "B-" },
+    { label: "AB+", value: "AB+" },
+    { label: "AB-", value: "AB-" },
+    { label: "O+", value: "O+" },
+    { label: "O-", value: "O-" },
+  ]);
 
- useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const icx = await serverLink(); 
-      setIcxData(icx);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const icx = await serverLink();
+        setIcxData(icx);
 
-      if (icx.serverLink) {
-        const res = await fetch(icx.serverLink); 
-        const data = await res.json();
-        setUsers(Array.isArray(data) ? data : []);
+        if (icx.serverLink) {
+          const res = await fetch(icx.serverLink);
+          const data = await res.json();
+          setUsers(Array.isArray(data) ? data : []);
+        }
+
+        setLoading(false);
+      } catch (err) {
+        console.error("Fetch Error:", err);
+        setError(true);
+        setLoading(false);
       }
+    };
 
-      setLoading(false);
-    } catch (err) {
-      console.error("Fetch Error:", err);
-      setError(true);
-      setLoading(false);
-    }
-  };
+    fetchData();
+  }, []);
 
-  fetchData();
-}, []);
-
-
+  
   function genderX(gender) {
     if (!gender) return "⚧ Unknown";
     const male = "♂️ Male";
@@ -58,18 +72,52 @@ export default function Home() {
     return name.charAt(0).toUpperCase();
   }
 
+ 
+  const filteredUsers =
+    value === ""
+      ? users
+      : users.filter((user) => user.bloodgroup.toUpperCase() === value);
+
   if (loading) return <Loadding />;
   if (error) return <ErrJsonx />;
 
   return (
-    <ScrollView style={{ backgroundColor: "#f9f9f9" }}>
-      <View style={style.viewBox}>
-        {users.length === 0 ? (
+    <ScrollView
+      style={{ backgroundColor: "#f9f9f9", flex: 1 }}
+      contentContainerStyle={{ paddingBottom: 50 }}
+    >
+      <View style={style.viewBoxi}>
+        <View style={{ margin: 10, zIndex: 1000 }}>
+          <Text style={{ marginBottom: 5, fontWeight: "bold", fontSize: 16 }}>
+            <FontAwesome name="filter" size={18} color="#2825d3ff" /> Filters
+          </Text>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            placeholder="রক্ত"
+            style={{ borderWidth: 1, borderColor: "#ccc", width: 120 }}
+            dropDownContainerStyle={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              maxHeight: "auto", 
+            }}
+            scrollViewProps={{
+              nestedScrollEnabled: true 
+            }}
+          />
+        </View>
+
+       
+        {filteredUsers.length === 0 ? (
           <Text style={{ textAlign: "center", marginTop: 20, color: "#999" }}>
-            No user data found 😕
+            এই গ্রুপে এখনও কোনো রক্তদাতা যুক্ত হননি। 😕
           </Text>
         ) : (
-          users.map((user, index) => (
+          filteredUsers.map((user, index) => (
             <View key={index} style={style.userBox}>
               {user.avater_url ? (
                 <Image
@@ -77,7 +125,6 @@ export default function Home() {
                   style={style.profileImage}
                 />
               ) : (
-                
                 <View
                   style={{
                     width: 70,
@@ -171,6 +218,9 @@ export default function Home() {
           ))
         )}
       </View>
+      <Text>
+        {'\n'}
+      </Text>
     </ScrollView>
   );
 }

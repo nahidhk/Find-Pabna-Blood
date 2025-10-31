@@ -14,7 +14,7 @@ export default StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    height: 70,
+    height: 60,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -57,9 +57,9 @@ export default StyleSheet.create({
 
   },
   bottomSide: {
-    bottom:0,
-    padding:10,
-    position: "absolute",   
+    bottom: 0,
+    padding: 10,
+    position: "absolute",
     opacity: 0.4
   },
   iTag: {
@@ -85,8 +85,8 @@ export default StyleSheet.create({
     borderColor: "#888",
     borderRadius: 4,
     padding: 10,
-    margin:10,
-    textTransform:"uppercase"
+    margin: 10,
+    textTransform: "uppercase"
   },
   btn: {
     margin: 20,
@@ -143,9 +143,18 @@ export default StyleSheet.create({
   upper: {
     textTransform: "uppercase",
   },
-  medel:{
-    flex:1,
-    justifyContent:"center",
-    alignItems:"center",
+  medel: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  viewBoxi: {
+    top: 60,
+  },
+  inputx:{
+     borderWidth: 1,
+    borderColor: "#888",
+    borderRadius: 4,
+    textTransform: "uppercase",
   }
 });

@@ -27,7 +27,7 @@ export default function Layout() {
     <SafeAreaView
       style={[
         styles.container,
-        { backgroundColor: colorScheme === "dark" ? "#242424ff" : "#4680ff" },
+        { backgroundColor: colorScheme === "dark" ? "#242424ff" : "#c9c9c9ff" },
       ]}
     >
       <Navbar />

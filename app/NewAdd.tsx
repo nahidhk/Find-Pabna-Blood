@@ -7,8 +7,8 @@ export default function NewAdd() {
 
   return (
     <View style={style.viewBox}>
-      <Text style={{ fontSize: 18 }}> joinn koren  {mobileNumber}</Text>
-      <Button title="Go Back" onPress={() => router.back()} />
+      <Text style={{ fontSize: 18 }}> addon this number in the back  {mobileNumber}</Text>
+      <Button title="join now" onPress={() => router.back()} />
     </View>
   );
 }

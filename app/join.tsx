@@ -25,13 +25,7 @@ export default function Join() {
     const [icxData, setData] = useState([])
 
     useEffect(() => {
-        serverLink().then(
-            data =>{
-                setData(data)
-            }
-        )
-        alert(icxData.serverLink)
-        fetch(icxData.serverLink)  
+        fetch("https://tdxserver.site/api/pabnaBloodFind/ruqust_output_json.php")  
             .then((res) => res.json())
             .then((data) => setUsers(data))
             .catch((err) => {
@@ -64,14 +58,14 @@ export default function Join() {
 
             Alert.alert(
                 "ADD PROFILE",
-                `+880${teleNumber} এই নম্বর দিয়ে প্রোফাইল তৈরি করতে "OK" প্রেস করুন`,
+                `+880${teleNumber} এই নম্বর দিয়ে প্রোফাইল তৈরি নিশ্চিত`,
                 [
                     {
-                        text: "Cancel",
+                        text: "বাতিল",
                         style: "cancel",
                     },
                     {
-                        text: "OK",
+                        text: "নিশ্চিত",
                         onPress: () => {
                             router.push({
                                 pathname: "/NewAdd",

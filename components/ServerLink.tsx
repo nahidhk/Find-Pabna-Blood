@@ -1,6 +1,5 @@
 
-import React from "react";
-
+// The server link typescript 
 
 export default function serverLink(){
 

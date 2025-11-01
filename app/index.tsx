@@ -5,7 +5,8 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  Linking
+  Linking,
+  TextInput
 } from "react-native";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import style from "./style/style";
@@ -15,6 +16,7 @@ import serverLink from "@/components/ServerLink";
 import DropDownPicker from "react-native-dropdown-picker";
 
 export default function Home() {
+  const [searchText, setSearchText] = useState("");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -56,7 +58,7 @@ export default function Home() {
     fetchData();
   }, []);
 
-  
+
   function genderX(gender) {
     if (!gender) return "⚧ Unknown";
     const male = "♂️ Male";
@@ -66,17 +68,25 @@ export default function Home() {
     return "⚧️ Other";
   }
 
- 
+
   function getFirstLetter(name) {
     if (!name) return "?";
     return name.charAt(0).toUpperCase();
   }
 
- 
-  const filteredUsers =
-    value === ""
-      ? users
-      : users.filter((user) => user.bloodgroup.toUpperCase() === value);
+
+  const filteredUsers = users
+    .filter((user) =>
+      user.bloodgroup.toUpperCase().includes(value.toUpperCase())
+    )
+    .filter((user) =>
+      searchText === ""
+        ? true
+        : user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        user.address.toLowerCase().includes(searchText.toLowerCase()) ||
+        user.phone.includes(searchText)
+    );
+
 
   if (loading) return <Loadding />;
   if (error) return <ErrJsonx />;
@@ -91,6 +101,7 @@ export default function Home() {
           <Text style={{ marginBottom: 5, fontWeight: "bold", fontSize: 16 }}>
             <FontAwesome name="filter" size={18} color="#2825d3ff" /> Filters
           </Text>
+
           <DropDownPicker
             open={open}
             value={value}
@@ -103,15 +114,24 @@ export default function Home() {
             dropDownContainerStyle={{
               borderWidth: 1,
               borderColor: "#ccc",
-              maxHeight: "auto", 
+              maxHeight: "auto",
             }}
             scrollViewProps={{
-              nestedScrollEnabled: true 
+              nestedScrollEnabled: true
             }}
           />
+
+          <TextInput
+            style={style.input}
+            placeholder="খুঁজুন ➤ নাম, ঠিকানা ও ফোন নাম্বার দিয়ে"
+            value={searchText}
+            onChangeText={(text) => setSearchText(text)}
+          />
+
+
         </View>
 
-       
+
         {filteredUsers.length === 0 ? (
           <Text style={{ textAlign: "center", marginTop: 20, color: "#999" }}>
             এই গ্রুপে এখনও কোনো রক্তদাতা যুক্ত হননি। 😕

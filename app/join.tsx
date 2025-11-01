@@ -15,6 +15,8 @@ import serverLink from "@/components/ServerLink";
 
 export default function Join() {
     const router = useRouter();
+
+    // স্টেট ডিফাইন
     const [phoneNumber, setPhoneNumber] = useState("");
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
@@ -22,19 +24,37 @@ export default function Join() {
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     const [error, setError] = useState(false);
-    const [icxData, setData] = useState([])
 
+    const [editName, setEditName] = useState("");
+    const [editAddress, setEditAddress] = useState("");
+    const [editBlood, setEditBlood] = useState("");
+
+    // Data fetch
     useEffect(() => {
-        fetch("https://tdxserver.site/api/pabnaBloodFind/ruqust_output_json.php")  
-            .then((res) => res.json())
-            .then((data) => setUsers(data))
-            .catch((err) => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const icx = await serverLink();
+                if (icx?.serverLink) {
+                    const res = await fetch(icx.serverLink);
+                    const data = await res.json();
+                    setUsers(Array.isArray(data) ? data : []);
+                }
+                setLoading(false);
+            } catch (err) {
+                console.error("Fetch Error:", err);
                 setError(true);
-            });
+                setLoading(false);
+            }
+        };
+        fetchData();
     }, []);
+
     if (error) {
         return <ErrJsonx />;
     }
+
+    // ফোন নম্বর চেক
     const numberCheck = () => {
         if (
             phoneNumber.trim() === "" ||
@@ -47,6 +67,7 @@ export default function Join() {
             );
             return;
         }
+
         const teleNumber = phoneNumber.slice(1);
         setLoading(true);
 
@@ -55,15 +76,12 @@ export default function Join() {
         );
 
         if (filteredData.length === 0) {
-
+            // নতুন প্রোফাইল
             Alert.alert(
                 "ADD PROFILE",
                 `+880${teleNumber} এই নম্বর দিয়ে প্রোফাইল তৈরি নিশ্চিত`,
                 [
-                    {
-                        text: "বাতিল",
-                        style: "cancel",
-                    },
+                    { text: "বাতিল", style: "cancel" },
                     {
                         text: "নিশ্চিত",
                         onPress: () => {
@@ -76,12 +94,16 @@ export default function Join() {
                 ],
                 { cancelable: false }
             );
-
+        } else {
+            // ইতিমধ্যে প্রোফাইল
+            const user = filteredData[0];
+            setCurrentUser(user);
+            setEditName(user.name);
+            setEditAddress(user.address);
+            setEditBlood(user.blood);
+            setModalVisible(true);
         }
 
-        const user = filteredData[0];
-        setCurrentUser(user);
-        setModalVisible(true);
         setLoading(false);
     };
 
@@ -91,9 +113,7 @@ export default function Join() {
                 {"\n\n\n"}
                 <Text style={style.bigText}>Create Profile</Text>
                 {"\n"}
-                <Text>
-                    আমাদের সাথে যোগ দিতে আপনার ফোন নাম্বার দিয়ে ফরম পূরণ করেন
-                </Text>
+                <Text>আমাদের সাথে যোগ দিতে আপনার ফোন নাম্বার দিয়ে ফরম পূরণ করুন</Text>
                 {"\n\n\n"}
             </Text>
 
@@ -123,8 +143,7 @@ export default function Join() {
                 </TouchableOpacity>
             </View>
 
-
-            {/*  Already Created Modal */}
+            {/* Already Created Modal */}
             {currentUser && (
                 <Modal
                     transparent={true}
@@ -147,7 +166,7 @@ export default function Join() {
                                 ID: {currentUser.id} {"\n"}
                                 নাম: {currentUser.name} {"\n"}
                                 ঠিকানা: {currentUser.address} {"\n"}
-                                রক্ত : {currentUser.blood}
+                                রক্ত: {currentUser.bloodgroup}
                             </Text>
 
                             <View
@@ -193,7 +212,7 @@ export default function Join() {
                 </Modal>
             )}
 
-            {/*  Edit Profile Modal */}
+            {/* Edit Profile Modal */}
             <Modal
                 transparent={true}
                 visible={editModalVisible}
@@ -210,21 +229,22 @@ export default function Join() {
                 >
                     <View style={style.popup}>
                         <Text style={style.bigText}>Edit Profile</Text>
-                        <Text>
 
-                        </Text>
                         <TextInput
-                            defaultValue={currentUser ? currentUser.name : ""}
+                            value={editName}
+                            onChangeText={setEditName}
                             placeholder="নাম পরিবর্তন করুন"
                             style={style.input}
                         />
                         <TextInput
-                            defaultValue={currentUser ? currentUser.address : ""}
+                            value={editAddress}
+                            onChangeText={setEditAddress}
                             placeholder="ঠিকানা পরিবর্তন করুন"
                             style={style.input}
                         />
                         <TextInput
-                            defaultValue={currentUser ? currentUser.blood : ""}
+                            value={editBlood}
+                            onChangeText={setEditBlood}
                             placeholder="রক্তের গ্রুপ পরিবর্তন করুন"
                             style={style.input}
                         />
@@ -237,7 +257,12 @@ export default function Join() {
                             }}
                         >
                             <TouchableOpacity
-                                onPress={() => Alert.alert("Profile Updated!")}
+                                onPress={() =>
+                                    Alert.alert(
+                                        "Profile Updated!",
+                                        `নাম: ${editName}\nঠিকানা: ${editAddress}\nরক্ত: ${editBlood}`
+                                    )
+                                }
                                 style={{
                                     backgroundColor: "#fff",
                                     paddingHorizontal: 12,
@@ -246,7 +271,7 @@ export default function Join() {
                                 }}
                             >
                                 <Text style={{ color: "#4680ff", fontWeight: "600" }}>
-                                    Sand Mail
+                                    Save
                                 </Text>
                             </TouchableOpacity>
 

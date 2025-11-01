@@ -4,6 +4,7 @@ import { Ionicons, Octicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import style from "@/app/style/style";
 import mySetting from "@/data/setting.json";
+import appData from "@/app.json"
 
 
 
@@ -155,13 +156,13 @@ export default function Navbar() {
 
           <View style={style.bottomSide}>
             <Text style={style.iTag}>
-              Version 5.3.8
+              Version {appData.expo.version}
             </Text >
             <Text style={style.iTag}>
               Powered By:
             </Text >
             <Text style={style.iTag}>
-              ভবানীপুর সমাজ কল্যাণ সংঘ
+              {mySetting.Powerbyname}
             </Text>
           </View>
 
